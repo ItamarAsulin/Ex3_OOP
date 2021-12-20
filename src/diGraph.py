@@ -6,6 +6,7 @@ class Node:
     def __init__(self, id: int, pos: tuple = (0, 0)):
         self.id = id
         self.pos = pos
+        self.tag = 0
 
     def __repr__(self):
         return f"id = {self.id} pos = {self.pos}"
@@ -98,6 +99,18 @@ class DiGraph(GraphInterface):
             self.num_of_edges -= 1
             self.mc += 1
             return True
+
+    def invert_graph(self, graph):
+        self.nodes.clear()
+        self.edges.clear()
+        self.in_edges.clear()
+        self.out_edges.clear()
+        for node in graph.nodes.values():
+            node_id = node.id
+            node_pos = node.pos
+            self.add_node(node_id, node_pos)
+        for edge in graph.edges.values():
+            self.add_edge(edge.dest, edge.src, edge.w)
 
     def __repr__(self):
         return f"nodes: {self.nodes.values().__repr__()} edges: {self.edges.values().__repr__()}"

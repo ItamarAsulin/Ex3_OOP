@@ -2,17 +2,25 @@ import json
 from abc import ABC
 from typing import List
 from queue import PriorityQueue
+from queue import Queue
 from GraphInterface import GraphInterface
 from diGraph import DiGraph
 from graphForJson import *
+from src.GraphAlgoInterface import GraphAlgoInterface
 
 
-class GraphAlgo(GraphInterface):
+
+
+class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self, graph: DiGraph = DiGraph()):
-        self.graph = graph
+        self.graph: DiGraph = graph
+        self.inverted: DiGraph = DiGraph()
+        self.inverted.invert_graph(graph)
         self.map_dist = {}
         self.map_prev = {}
+
+
 
     def get_graph(self) -> GraphInterface:
         return self.graph
@@ -32,7 +40,7 @@ class GraphAlgo(GraphInterface):
                 pos_str = str(node["pos"]).split(',')
                 x = float(pos_str[0])
                 y = float(pos_str[1])
-                node_pos = (x,y)
+                node_pos = (x, y)
                 node_pos = node_pos
                 loaded_graph.add_node(node_id, node_pos)
 
@@ -43,6 +51,7 @@ class GraphAlgo(GraphInterface):
             loaded_graph.add_edge(src, dest, weight)
 
         self.graph = loaded_graph
+        self.inverted.invert_graph(loaded_graph)
         return True
 
     def save_to_json(self, file_name: str) -> bool:
@@ -56,6 +65,16 @@ class GraphAlgo(GraphInterface):
         with open(file_name, 'w') as f:
             json.dump(self.graph.__dict__, f)
 
+
+
+    def is_connected(self):
+        # is_connected_normal: bool = self.__is_connected(self.graph)
+        # self.invert_graph()
+        # is_connected_inverted: bool = self.__is_connected()
+        # self.invert_graph()
+        normal_graph = self.graph
+        inverted_graph = self.inverted
+        return self.__is_connected(normal_graph) and self.__is_connected(inverted_graph)
 
     def calculate_shortest_path(self, src_id: int):
         self.map_dist.clear()
@@ -163,3 +182,32 @@ class GraphAlgo(GraphInterface):
 
     def plot_graph(self) -> None:
         return
+
+
+    def set_all_tags(self, graph: DiGraph, tag: int):
+        for node in graph.nodes.values():
+            node.tag = tag
+
+    def BFS(self,graph, node: Node):
+        queue: Queue = Queue()
+        queue.put(node)
+        node.tag = 1
+        while not queue.empty():
+            current_node: node = queue.get()
+            for edge in graph.all_out_edges_of_node(current_node.id).values():
+                dest_node_id = edge.dest
+                node_to_set = graph.nodes[dest_node_id]
+                if node_to_set.tag == 0:
+                    node_to_set.tag = 1
+                    assert isinstance(node_to_set, Node)
+                    queue.put(node_to_set)
+
+    def __is_connected(self, graph: DiGraph):
+        self.set_all_tags(graph, 0)
+        node_first: Node = graph.nodes[0]
+        self.BFS(graph, node_first)
+        for node in graph.nodes.values():
+            if node.tag == 0:
+                return False
+
+        return True
