@@ -1,11 +1,20 @@
+import json
+import random
+
 from GraphInterface import GraphInterface
 
 
 class Node:
 
-    def __init__(self, id: int, pos: tuple = (0, 0)):
+    def __init__(self, id: int, pos: tuple = None):
         self.id = id
-        self.pos = pos
+        if pos == None:
+            x=random.randint(35,36)
+            y = random.randint(32, 33)
+            pos=(x,y)
+            self.pos=pos
+        else:
+            self.pos = pos
         self.tag = 0
 
     def __repr__(self):
@@ -114,4 +123,5 @@ class DiGraph(GraphInterface):
 
     def __repr__(self):
         return f"nodes: {self.nodes.values().__repr__()} edges: {self.edges.values().__repr__()}"
+
 

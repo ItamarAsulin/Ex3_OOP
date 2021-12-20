@@ -1,6 +1,3 @@
-from src.diGraph import *
-
-
 class NodeForJson:
 
     def __init__(self, id: int, pos: str):
@@ -27,10 +24,16 @@ class GraphForJson:
         self.Edges = []
         self.Nodes = []
 
-    def add_node(self, node_id: int, node_pos: tuple = None):
-        node_to_add = NodeForJson(node_id, node_pos)
-        self.Nodes.append(node_to_add)
 
     def add_edge(self, edge_src: int, edge_weight: float, edge_dest: int):
         edge_to_add = EdgeForJson(edge_src, edge_weight, edge_dest)
         self.Edges.append(edge_to_add)
+
+    def add_node(self, node_id: int, node_pos: str = None):
+        node_to_add = NodeForJson(node_id, node_pos)
+        self.Nodes.append(node_to_add)
+
+    def __repr__(self) -> str:
+        return str(self.Nodes)+"\n"+str(self.Edges)
+
+
