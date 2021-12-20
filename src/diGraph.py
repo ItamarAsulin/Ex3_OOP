@@ -31,7 +31,6 @@ class Edge:
     def __repr__(self):
         return f"src = {self.src} dest = {self.dest} weight = {self.w}"
 
-
 class DiGraph(GraphInterface):
 
     def __init__(self, nodes={}, edges={}, in_edges={}, out_edges={}):
@@ -123,5 +122,8 @@ class DiGraph(GraphInterface):
 
     def __repr__(self):
         return f"nodes: {self.nodes.values().__repr__()} edges: {self.edges.values().__repr__()}"
+
+    def get_node(self, key):
+        return self.nodes[key]
 
 
