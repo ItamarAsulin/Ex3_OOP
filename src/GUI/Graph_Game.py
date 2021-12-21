@@ -2,10 +2,7 @@ import math
 import sys
 
 import pygame, os
-from graphAlgo import GraphAlgo
-
-from diGraph import *
-
+from src.DirectedWeightedGraph.graphAlgo import GraphAlgo
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

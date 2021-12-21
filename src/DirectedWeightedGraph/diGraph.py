@@ -1,35 +1,9 @@
-import json
 import random
 
-from GraphInterface import GraphInterface
+from src.DirectedWeightedGraph.edge import Edge
+from src.DirectedWeightedGraph.node import Node
+from src.api.GraphInterface import GraphInterface
 
-
-class Node:
-
-    def __init__(self, id: int, pos: tuple = None):
-        self.id = id
-        if pos == None:
-            x=random.randint(35,36)
-            y = random.randint(32, 33)
-            pos=(x,y)
-            self.pos=pos
-        else:
-            self.pos = pos
-        self.tag = 0
-
-    def __repr__(self):
-        return f"id = {self.id} pos = {self.pos}"
-
-
-class Edge:
-
-    def __init__(self, src: int, dest: int, w: float):
-        self.src = src
-        self.dest = dest
-        self.w = w
-
-    def __repr__(self):
-        return f"src = {self.src} dest = {self.dest} weight = {self.w}"
 
 class DiGraph(GraphInterface):
 
@@ -92,6 +66,19 @@ class DiGraph(GraphInterface):
             del self.nodes[node_id]
             del self.out_edges[node_id]
             del self.in_edges[node_id]
+            keys_to_remove = []
+            for key, edge in self.edges.items():
+                edge_src = key[0]
+                edge_dest = key[1]
+                if edge_src == node_id or edge_dest == node_id:
+                    keys_to_remove.append(key)
+
+            for key in keys_to_remove:
+                del self.edges[key]
+                edge_src = key[0]
+                edge_dest = key[1]
+                if edge_dest == node_id:
+                    del self.out_edges[edge_src][edge_dest]
             self.num_of_nodes -= 1
             self.mc += 1
             return True
@@ -108,22 +95,23 @@ class DiGraph(GraphInterface):
             self.mc += 1
             return True
 
-    def invert_graph(self, graph):
-        self.nodes.clear()
-        self.edges.clear()
-        self.in_edges.clear()
-        self.out_edges.clear()
-        for node in graph.nodes.values():
+    def invert_graph(self):
+        inverted: DiGraph = DiGraph()
+        for node in self.nodes.values():
             node_id = node.id
             node_pos = node.pos
-            self.add_node(node_id, node_pos)
-        for edge in graph.edges.values():
-            self.add_edge(edge.dest, edge.src, edge.w)
+            inverted.add_node(node_id, node_pos)
+        for edge in self.edges.values():
+            inverted.add_edge(edge.dest, edge.src, edge.w)
+
+        return inverted
+
+    def set_all_tags(self, tag: int):
+        for node in self.nodes.values():
+            node.tag = tag
 
     def __repr__(self):
         return f"nodes: {self.nodes.values().__repr__()} edges: {self.edges.values().__repr__()}"
 
     def get_node(self, key):
         return self.nodes[key]
-
-

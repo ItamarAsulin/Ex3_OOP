@@ -1,5 +1,5 @@
-from diGraph import DiGraph
-from graphAlgo import GraphAlgo
+from src.DirectedWeightedGraph.diGraph import DiGraph
+from src.DirectedWeightedGraph.graphAlgo import GraphAlgo
 
 
 def check():
@@ -62,6 +62,10 @@ def check1():
     print(g_algo.shortest_path(0, 3))
     print(g_algo.shortest_path(3, 1))
     print(g_algo.centerPoint())
+    print(g_algo.is_connected())
+    g_algo.graph.remove_node(0)
+    print(g_algo.is_connected())
+    g_algo.graph.add_node(18, (35.635265, 37.422334))
     print(g_algo.is_connected())
     # g_algo.save_to_json(file + '_saved')
     # g_algo.plot_graph()

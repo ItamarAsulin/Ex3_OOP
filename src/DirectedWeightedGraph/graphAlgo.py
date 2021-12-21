@@ -1,20 +1,18 @@
 import json
-from abc import ABC
 from typing import List
 from queue import PriorityQueue
 from queue import Queue
-from GraphInterface import GraphInterface
-from diGraph import DiGraph, Node
-from graphForJson import *
-import GraphAlgoInterface
+from src.api.GraphInterface import GraphInterface
+from src.DirectedWeightedGraph.diGraph import *
+from src.GraphForJson.graphForJson import *
+from src.api import GraphAlgoInterface
 
 
 class GraphAlgo(GraphAlgoInterface.GraphAlgoInterface):
 
     def __init__(self, graph: DiGraph = DiGraph()):
         self.graph: DiGraph = graph
-        self.inverted: DiGraph = DiGraph()
-        # self.inverted.invert_graph(graph)
+        self.inverted: DiGraph = graph.invert_graph()
         self.map_dist = {}
         self.map_prev = {}
 
@@ -25,7 +23,7 @@ class GraphAlgo(GraphAlgoInterface.GraphAlgoInterface):
         return self.graph
 
     def load_from_json(self, file_name: str) -> bool:
-        loaded_graph = DiGraph()
+        loaded_graph: DiGraph = DiGraph()
         with open(file_name, "r") as f:
             graph_from_json = json.load(f)
         nodes = graph_from_json.get("Nodes")
@@ -50,7 +48,7 @@ class GraphAlgo(GraphAlgoInterface.GraphAlgoInterface):
             loaded_graph.add_edge(src, dest, weight)
 
         self.graph = loaded_graph
-        # self.inverted.invert_graph(loaded_graph)
+        self.inverted = loaded_graph.invert_graph()
         return True
 
     def save_to_json(self, file_name: str) -> bool:
@@ -58,10 +56,15 @@ class GraphAlgo(GraphAlgoInterface.GraphAlgoInterface):
         for edge in self.graph.edges.values():
             json_graph.add_edge(edge.src, edge.w, edge.dest)
         for node in self.graph.nodes.values():
-            json_graph.add_node(node.id, str(node.pos))
+            node_x = node.pos[0]
+            node_y = node.pos[1]
+            node_z = 0.0
+            json_node_pos = f"{node_x},{node_y},{node_z}"
+            json_graph.add_node(node.id, json_node_pos)
 
         with open(file_name, 'w') as f:
             json.dump(json_graph, default=lambda l: l.__dict__, fp=f, indent=4)
+            return True
 
     def is_connected(self):
         # is_connected_normal: bool = self.__is_connected(self.graph)
@@ -108,7 +111,7 @@ class GraphAlgo(GraphAlgoInterface.GraphAlgoInterface):
         path = list()
         prev_node = self.map_prev.get(id2)
         while prev_node != -1:
-            path.append(self.map_prev[prev_node])
+            path.append(prev_node)
             prev_node = self.map_prev[prev_node]
         return dist, path
 
@@ -179,11 +182,9 @@ class GraphAlgo(GraphAlgoInterface.GraphAlgoInterface):
     def plot_graph(self) -> None:
         return
 
-    def set_all_tags(self, graph: DiGraph, tag: int):
-        for node in graph.nodes.values():
-            node.tag = tag
 
-    def BFS(self, graph, node):
+    @staticmethod
+    def BFS(graph, node):
         queue: Queue = Queue()
         queue.put(node)
         node.tag = 1
@@ -198,8 +199,10 @@ class GraphAlgo(GraphAlgoInterface.GraphAlgoInterface):
                     queue.put(node_to_set)
 
     def __is_connected(self, graph: DiGraph):
-        self.set_all_tags(graph, 0)
-        node_first:Node  = graph.nodes[0]
+        graph.set_all_tags(0)
+        random_key, random_value = graph.nodes.popitem()
+        node_first: Node = random_value
+        graph.nodes[random_key] = random_value
         self.BFS(graph, node_first)
         for node in graph.nodes.values():
             if node.tag == 0:
