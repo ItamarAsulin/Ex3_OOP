@@ -15,25 +15,45 @@ class DiGraph(GraphInterface):
         self.mc = 0
         self.num_of_nodes = 0
         self.num_of_edges = 0
-
+    """
+    this method returns the number of nodes in the graph.
+    """
     def v_size(self) -> int:
         return self.num_of_nodes
 
+    """
+    this method returns the number of edges in the graph.
+    """
     def e_size(self) -> int:
         return self.num_of_edges
 
+    """
+    this method returns a dictionary of all the graph's nodes
+    """
     def get_all_v(self) -> dict:
         return self.nodes
 
+    """
+    this method returns a dictionary representing all the in edges of the given node.
+    """
     def all_in_edges_of_node(self, id1: int) -> dict:
         return self.in_edges[id1]
 
+    """
+    this method returns a dictionary representing all the out edges of the given node.
+    """
     def all_out_edges_of_node(self, id1: int) -> dict:
         return self.out_edges[id1]
 
+    """
+    this method returns the graph's mods count.
+    """
     def get_mc(self) -> int:
         return self.mc
 
+    """
+    this method adds the given edge to the graph.
+    """
     def add_edge(self, id1: int, id2: int, weight: float) -> bool:
         edge_key = (id1, id2)
         if edge_key in self.edges.keys():
@@ -47,6 +67,9 @@ class DiGraph(GraphInterface):
             self.num_of_edges += 1
             return True
 
+    """
+    this method adds the given node to the graph.
+    """
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         if node_id in self.nodes.keys():
             return False
@@ -59,6 +82,9 @@ class DiGraph(GraphInterface):
             self.num_of_nodes += 1
             return True
 
+    """
+    this method removes the given nodes from the graph.
+    """
     def remove_node(self, node_id: int) -> bool:
         if node_id not in self.nodes.keys():
             return False
@@ -83,6 +109,9 @@ class DiGraph(GraphInterface):
             self.mc += 1
             return True
 
+    """
+    this method removes the given edge from the graph.
+    """
     def remove_edge(self, node_id1: int, node_id2: int) -> bool:
         edge_key = (node_id1, node_id2)
         if edge_key not in self.edges.keys():
@@ -95,17 +124,9 @@ class DiGraph(GraphInterface):
             self.mc += 1
             return True
 
-    def invert_graph(self):
-        inverted: DiGraph = DiGraph()
-        for node in self.nodes.values():
-            node_id = node.id
-            node_pos = node.pos
-            inverted.add_node(node_id, node_pos)
-        for edge in self.edges.values():
-            inverted.add_edge(edge.dest, edge.src, edge.w)
-
-        return inverted
-
+    """
+    this method sets all the graph's nodes tags to thew given tag.
+    """
     def set_all_tags(self, tag: int):
         for node in self.nodes.values():
             node.tag = tag
@@ -113,5 +134,8 @@ class DiGraph(GraphInterface):
     def __repr__(self):
         return f"nodes: {self.nodes.values().__repr__()} edges: {self.edges.values().__repr__()}"
 
+    """
+    this method returns the node relevant to the given key.
+    """
     def get_node(self, key):
         return self.nodes[key]
