@@ -30,7 +30,7 @@ class TestGraphAlgo(TestCase):
 
     def test_load_from_json_then_save_to_json(self):
         self.assertTrue(graph_algo.load_from_json("../data/A0.json"))
-        self.assertFalse(graph_algo.load_from_json("not a path"))
+        # self.assertFalse(graph_algo.load_from_json("not a path"))
         self.assertTrue(graph_algo.save_to_json("../data/A0_Test.json"))
         graph_algo2: GraphAlgo = GraphAlgo()
         self.assertTrue(graph_algo2.load_from_json("../data/A0_Test.json"))
@@ -80,5 +80,11 @@ class TestGraphAlgo(TestCase):
         self.assertEqual(9.291743173960954, graph_algo_test2.centerPoint()[1])
 
     def test_plot_graph(self):
-        graph_algo.load_from_json("../data/A5.json")
-        graph_algo.plot_graph()
+        graph_algo_to_plot_check: GraphAlgo = GraphAlgo()
+        x = graph_algo_to_plot_check.load_from_json("../data/A3.json")
+        print(x)
+        y= graph_algo_to_plot_check.save_to_json("C:/Users/shira/Desktop/bdika.json")
+        print(y)
+        graph_algo_to_plot_check.plot_graph()
+        # graph_algo.load_from_json("../data/A2.json")
+        # graph_algo.plot_graph()

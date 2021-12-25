@@ -70,7 +70,7 @@ class GraphAlgo(GraphAlgoInterface):
             json_graph.add_edge(edge.src, edge.w, edge.dest)
 
         with open(file_name, 'w') as f:
-            json.dump(self.graph.__dict__, f)
+            json.dump(json_graph, default=lambda o: o.__dict__, fp=f, indent=4)
 
     """
     this method returns a boolean value, indicating whether the graph is connected or not.

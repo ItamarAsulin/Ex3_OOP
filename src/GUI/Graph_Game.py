@@ -1,10 +1,12 @@
 import math
 import sys
-
-import pygame, os
+import os
 
 # from src.DirectedWeightedGraph.graphAlgo import *
 # from src.DirectedWeightedGraph.graphAlgo import GraphAlgo
+import pygame
+
+from src.DirectedWeightedGraph.graphAlgoFile import *
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -137,8 +139,8 @@ class Graph_Game:
         pygame.quit()
 
 
-if __name__ == "__main__":
-    g = GraphAlgo()
-    g.load_from_json(r"C:\Users\shira\Desktop\Ex3_OOP-main\Ex3_OOP-main\data\A3.json")
-    game = Graph_Game(g)
-    game.play()
+# if __name__ == "__main__":
+#     g = GraphAlgo()
+#     g.load_from_json(r"C:\Users\shira\Desktop\Ex3_OOP-main\Ex3_OOP-main\data\A3.json")
+#     game = Graph_Game(g)
+#     game.play()

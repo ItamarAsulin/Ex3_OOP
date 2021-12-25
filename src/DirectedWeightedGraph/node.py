@@ -6,8 +6,8 @@ class Node:
     def __init__(self, id: int, pos: tuple = None):
         self.id = id
         if pos is None:
-            x = random.uniform(35.0, 36.0)
-            y = random.uniform(32.0, 33.0)
+            x = random.uniform(35.18759, 35.21310)
+            y = random.uniform(32.09965, 32.10921)
             pos = (x, y)
             self.pos = pos
         else:
