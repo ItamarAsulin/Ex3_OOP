@@ -134,7 +134,7 @@ class GraphAlgo(GraphAlgoInterface):
         path = list()
         prev_node = self.map_prev.get(id2)
         while prev_node != -1:
-            path.append(self.map_prev[prev_node])
+            path.append(prev_node)
             prev_node = self.map_prev[prev_node]
         path.reverse()
         return dist, path
@@ -142,8 +142,9 @@ class GraphAlgo(GraphAlgoInterface):
     """
     this method returns the min value for the next node to travel to in TSP.
     """
-    def find_min_for_tsp(self, unvisited: set):
-        min_dist_node = -1
+    def find_min_for_tsp(self, unvisited: set, current_node_id: int):
+        self.calculate_shortest_path(current_node_id)
+        min_dist_node = current_node_id
         min_dist = float('inf')
         for node_id in unvisited:
             current_dist = self.map_dist[node_id]
@@ -151,7 +152,7 @@ class GraphAlgo(GraphAlgoInterface):
                 min_dist = current_dist
                 min_dist_node = node_id
 
-        if min_dist_node == -1:
+        if min_dist_node == -1 and len(unvisited) > 0:
             return unvisited.pop()
         return min_dist_node
 
@@ -170,10 +171,10 @@ class GraphAlgo(GraphAlgoInterface):
         for node_id in node_lst:
             unvisited.add(node_id)
         current_node_id = unvisited.pop()
+        unvisited.add(current_node_id)
         while len(unvisited) != 0:
             unvisited.remove(current_node_id)
-            self.calculate_shortest_path(current_node_id)
-            next_node = self.find_min_for_tsp()
+            next_node = self.find_min_for_tsp(unvisited, current_node_id)
             path_from_current_to_next: list = self.shortest_path(current_node_id, next_node)[1]
             path.append(path_from_current_to_next[0])
             if path_from_current_to_next[0] in unvisited:

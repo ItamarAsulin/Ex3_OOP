@@ -20,7 +20,8 @@ def check():
     """
     check0()
     check1()
-    # check2()
+    check2()
+    check3()
 
 
 def check0():
@@ -60,16 +61,16 @@ def check1():
     file = "../data/A2.json"
     g_algo.load_from_json(file)  # init a GraphAlgo from a json file
     g_algo.plot_graph()
-    # print(g_algo.shortest_path(0, 3))
-    # print(g_algo.shortest_path(3, 1))
+    print(g_algo.shortest_path(0, 3))
+    print(g_algo.shortest_path(3, 1))
     print(g_algo.centerPoint())
-    # print(g_algo.is_connected())
-    # g_algo.graph.remove_node(0)
-    # print(g_algo.is_connected())
-    # g_algo.graph.add_node(18, (35.635265, 37.422334))
-    # print(g_algo.is_connected())
-    # g_algo.save_to_json(file + '_saved')
-    # g_algo.plot_graph()
+    print(g_algo.is_connected())
+    g_algo.graph.remove_node(0)
+    print(g_algo.is_connected())
+    g_algo.graph.add_node(18, (35.635265, 37.422334))
+    print(g_algo.is_connected())
+    g_algo.save_to_json(file + '_saved')
+    g_algo.plot_graph()
 
 
 def check2():
@@ -116,4 +117,4 @@ def check3():
 
 
 if __name__ == '__main__':
-    check3()
+    check()
