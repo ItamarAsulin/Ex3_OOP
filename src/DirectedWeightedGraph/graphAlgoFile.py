@@ -16,8 +16,8 @@ class GraphAlgo(GraphAlgoInterface):
     """
     this is the init function of this class.
     """
-    def __init__(self):
-        self.graph: DiGraph = DiGraph({},{},{},{})
+    def __init__(self,g:DiGraph=DiGraph()):
+        self.graph: DiGraph = g
         self.map_dist = {}
         self.map_prev = {}
 
@@ -31,7 +31,7 @@ class GraphAlgo(GraphAlgoInterface):
     this method loads DiGraph from json file and initiates it to be the graph on which the algorithms are preformed.
     """
     def load_from_json(self, file_name: str) -> bool:
-        loaded_graph = DiGraph({},{},{},{})
+        loaded_graph = DiGraph()
         try:
             with open(file_name, "r") as f:
                 graph_from_json = json.load(f)
