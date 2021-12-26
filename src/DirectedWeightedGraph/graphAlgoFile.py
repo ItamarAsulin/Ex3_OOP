@@ -17,7 +17,7 @@ class GraphAlgo(GraphAlgoInterface):
     this is the init function of this class.
     """
     def __init__(self):
-        self.graph: DiGraph = DiGraph()
+        self.graph: DiGraph = DiGraph({},{},{},{})
         self.map_dist = {}
         self.map_prev = {}
 
@@ -31,46 +31,57 @@ class GraphAlgo(GraphAlgoInterface):
     this method loads DiGraph from json file and initiates it to be the graph on which the algorithms are preformed.
     """
     def load_from_json(self, file_name: str) -> bool:
-        loaded_graph = DiGraph()
-        with open(file_name, "r") as f:
-            graph_from_json = json.load(f)
-        nodes = graph_from_json.get("Nodes")
-        edges = graph_from_json.get("Edges")
-        for node in nodes:
-            if len(node) == 1:
-                node_id = int(node["id"])
-                loaded_graph.add_node(node_id)
-            else:
-                node_id = int(node["id"])
-                pos_str = str(node["pos"]).split(',')
-                x = float(pos_str[0])
-                y = float(pos_str[1])
-                node_pos = (x, y)
-                node_pos = node_pos
-                loaded_graph.add_node(node_id, node_pos)
+        loaded_graph = DiGraph({},{},{},{})
+        try:
+            with open(file_name, "r") as f:
+                graph_from_json = json.load(f)
+            nodes = graph_from_json.get("Nodes")
+            edges = graph_from_json.get("Edges")
+            for node in nodes:
+                if len(node) == 1:
+                    node_id = int(node["id"])
+                    loaded_graph.add_node(node_id)
+                else:
+                    node_id = int(node["id"])
+                    pos_str = str(node["pos"]).split(',')
+                    x = float(pos_str[0])
+                    y = float(pos_str[1])
+                    node_pos = (x, y)
+                    node_pos = node_pos
+                    loaded_graph.add_node(node_id, node_pos)
 
-        for edge in edges:
-            src = int(edge["src"])
-            weight = float(edge["w"])
-            dest = int(edge["dest"])
-            loaded_graph.add_edge(src, dest, weight)
+            for edge in edges:
+                src = int(edge["src"])
+                weight = float(edge["w"])
+                dest = int(edge["dest"])
+                loaded_graph.add_edge(src, dest, weight)
 
-        self.graph = loaded_graph
-        return True
+            self.graph = loaded_graph
+            return True
+        except:
+            print("FileNotFoundError")
+            return False
 
     """
     this method saves the graph on which the algorithms are preformed to jason file.
     """
     def save_to_json(self, file_name: str) -> bool:
         json_graph = GraphForJson()
-        for node in self.graph.nodes.values():
-            json_graph.add_node(node.id, str(node.pos))
+        try:
+            for node in self.graph.nodes.values():
+                node_str_without_tuple=str(node.pos)[1:-1:1]
+                json_graph.add_node(node.id, node_str_without_tuple)
+                # json_graph.add_node(node.id, str(node.pos))
 
-        for edge in self.graph.edges.values():
-            json_graph.add_edge(edge.src, edge.w, edge.dest)
+            for edge in self.graph.edges.values():
+                json_graph.add_edge(edge.src, edge.w, edge.dest)
 
-        with open(file_name, 'w') as f:
-            json.dump(json_graph, default=lambda o: o.__dict__, fp=f, indent=4)
+            with open(file_name, 'w') as f:
+                json.dump(json_graph, default=lambda o: o.__dict__, fp=f, indent=2)
+            return True
+        except:
+                print("FileNotFoundError")
+                return False
 
     """
     this method returns a boolean value, indicating whether the graph is connected or not.
@@ -108,10 +119,10 @@ class GraphAlgo(GraphAlgoInterface):
     """
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         if id1 not in self.graph.nodes.keys() or id2 not in self.graph.nodes.keys():
-            return -1, []
+            return float('inf'), []
 
         if id1 in self.graph.nodes.keys() and id1 == id2:
-            path = List
+            path = []
             path.append(id1)
             return 0.0, path
 
@@ -241,7 +252,7 @@ class GraphAlgo(GraphAlgoInterface):
     """
     def __is_connected(self, graph: DiGraph):
         self.set_all_tags(graph, 0)
-        node_first: Node = graph.nodes[0]
+        node_first: Node = self.graph.nodes[0]
         self.BFS(graph, node_first)
         for node in graph.nodes.values():
             if node.tag == 0:

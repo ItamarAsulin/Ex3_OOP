@@ -7,7 +7,7 @@ from src.api.GraphInterface import GraphInterface
 
 class DiGraph(GraphInterface):
 
-    def __init__(self, nodes={}, edges={}, in_edges={}, out_edges={}):
+    def __init__(self, nodes, edges, in_edges, out_edges):
         self.nodes = nodes
         self.edges = edges
         self.out_edges = in_edges
