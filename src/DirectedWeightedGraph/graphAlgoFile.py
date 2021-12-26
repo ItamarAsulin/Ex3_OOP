@@ -8,7 +8,16 @@ from src.DirectedWeightedGraph.diGraph import *
 from src.GraphForJson.graphForJson import *
 from src.api.GraphAlgoInterface import GraphAlgoInterface
 from src.GUI.Graph_Game import *
-from src.GUI.matPlotLibGraph import PlotGraph
+
+
+def invert_graph(graph: DiGraph) -> DiGraph:
+    inverted_graph: DiGraph = DiGraph()
+    for node in graph.nodes.values():
+        inverted_graph.add_node(node.id, node.pos)
+    for edge in graph.edges.values():
+        inverted_graph.add_edge(edge.dest, edge.src, edge.w)
+
+    return inverted_graph
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -88,7 +97,8 @@ class GraphAlgo(GraphAlgoInterface):
     """
     def is_connected(self):
         normal_graph = self.graph
-        return self.__is_connected(normal_graph)
+        inverted_graph = invert_graph(normal_graph)
+        return self.__is_connected(normal_graph) and self.__is_connected(inverted_graph)
 
     """
     this method calculates the shortest from given src id to all the nodes in the graph.
@@ -132,7 +142,9 @@ class GraphAlgo(GraphAlgoInterface):
 
         dist = float(self.map_dist[id2])
         path = list()
+        path.append(id2)
         prev_node = self.map_prev.get(id2)
+
         while prev_node != -1:
             path.append(prev_node)
             prev_node = self.map_prev[prev_node]
@@ -179,7 +191,7 @@ class GraphAlgo(GraphAlgoInterface):
             path.append(path_from_current_to_next[0])
             if path_from_current_to_next[0] in unvisited:
                 unvisited.remove(path_from_current_to_next[0])
-            for i in range(1, len(path_from_current_to_next)):
+            for i in range(1, len(path_from_current_to_next) - 1):
                 node_id = path_from_current_to_next[i]
                 if node_id in unvisited:
                     unvisited.remove(node_id)
@@ -203,6 +215,8 @@ class GraphAlgo(GraphAlgoInterface):
     this method returns the node for which the max dist from the other nodes is minimal.
     """
     def centerPoint(self) -> (int, float):
+        if not self.is_connected():
+            return None, float('inf')
         key_of_center = -1
         min_max_dist = float('inf')
         for node_id in self.graph.nodes.keys():

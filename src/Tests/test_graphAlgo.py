@@ -4,14 +4,13 @@ from src.DirectedWeightedGraph.graphAlgoFile import *
 
 
 def create_graph(size: int, graph: DiGraph):
-
-    for i in range (0,size):
+    for i in range(0, size):
         graph.add_node(i)
 
 
 graph_algo_test2: GraphAlgo = GraphAlgo()
 graph_algo: GraphAlgo = GraphAlgo()
-g1: DiGraph = DiGraph({},{},{},{})
+g1: DiGraph = DiGraph()
 create_graph(10, g1)
 g1.add_edge(0, 1, 0.5)
 g1.add_edge(0, 2, 2.5)
@@ -24,7 +23,7 @@ g1.add_edge(6, 5, 3.1)
 g1.add_edge(7, 8, 1.8)
 g1.add_edge(3, 8, 9.6)
 g1.add_edge(1, 5, 5.6)
-graph_algo=GraphAlgo()
+graph_algo = GraphAlgo()
 
 
 class TestGraphAlgo(TestCase):
@@ -50,7 +49,7 @@ class TestGraphAlgo(TestCase):
 
     def test_shortest_path(self):
         graph_algo_test: GraphAlgo = GraphAlgo()
-        graph_algo_test.graph=g1
+        graph_algo_test.graph = g1
         self.assertEqual(5.6, graph_algo_test.shortest_path(1, 5)[0])
         self.assertEqual(0.5, graph_algo_test.shortest_path(0, 1)[0])
         self.assertEqual(4.48, graph_algo_test.shortest_path(0, 3)[0])
@@ -94,4 +93,3 @@ class TestGraphAlgo(TestCase):
         graph_algo_to_plot_check: GraphAlgo = GraphAlgo()
         graph_algo_to_plot_check.load_from_json("../data/A3.json")
         graph_algo_to_plot_check.plot_graph()
-

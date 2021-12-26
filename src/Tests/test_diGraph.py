@@ -66,21 +66,6 @@ class TestDiGraph(TestCase):
         self.assertFalse(my_graph.remove_edge(0,11))
         self.assertEqual(89, my_graph.e_size())
 
-    def test_invert_graph(self):
-        my_graph: DiGraph = generate_connected_graph()
-        my_inverted_graph = my_graph.invert_graph()
-        for node in my_graph.nodes.values():
-            self.assertTrue(node.id in my_inverted_graph.nodes.keys())
-            self.assertEqual(node.pos, my_inverted_graph.nodes[node.id].pos)
-        for edge in my_graph.edges.values():
-            edge_src = edge.src
-            edge_dest = edge.dest
-            edge_weight = edge.w
-            inverted_key = (edge_dest, edge_src)
-            self.assertTrue(inverted_key in my_inverted_graph.edges.keys())
-            inverted_edge: Edge = my_inverted_graph.edges[inverted_key]
-            self.assertEqual(edge_weight, inverted_edge.w)
-
     def test_set_all_tags(self):
         my_graph: DiGraph = generate_connected_graph()
         my_graph.set_all_tags(3)
