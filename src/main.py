@@ -20,7 +20,7 @@ def check():
     """
     check0()
     check1()
-    # check2()
+    check2()
 
 
 def check0():
@@ -28,7 +28,7 @@ def check0():
     This function tests the naming (main methods of the DiGraph class, as defined in GraphInterface.
     :return:
     """
-    g = DiGraph()  # creates an empty directed graph
+    g = DiGraph({},{},{},{})  # creates an empty directed graph
     for n in range(4):
         g.add_node(n)
     g.add_edge(0, 1, 1)
@@ -46,7 +46,8 @@ def check0():
     print(g.v_size())
     print(g.e_size())
 
-    g_algo = GraphAlgo(g)
+    g_algo = GraphAlgo()
+    g_algo.graph=g
     print(g_algo.shortest_path(0, 3))
     g_algo.plot_graph()
 
@@ -116,4 +117,4 @@ def check3():
 
 
 if __name__ == '__main__':
-    check3()
+    check()
