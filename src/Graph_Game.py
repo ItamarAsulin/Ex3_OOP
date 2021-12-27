@@ -34,34 +34,6 @@ class Graph_Game:
         self.X_par = 0
         self.Y_par = 0
 
-    # def main_menu_buttons(self):
-    #     self.menu_rect = pygame.Rect([10, 10], [100, 30])
-    #     self.quit_rect = pygame.Rect([120, 10], [100, 30])
-    #     rect_button_color = CYAN
-    #     menu = "MENU"
-    #     quit = "QUIT"
-    #     font = pygame.font.SysFont('impact', 32)  # Here's the font we'll use to render text
-    #     pygame.draw.rect(self.WIN, rect_button_color, self.menu_rect)
-    #     rect_clicks_surf = font.render(menu, True, BLACK)
-    #     self.WIN.blit(rect_clicks_surf, [self.menu_rect.topleft[0] + 10, self.menu_rect.topleft[1] - 5])
-    #     pygame.draw.rect(self.WIN, rect_button_color, self.quit_rect)
-    #     rect_clicks_surf = font.render(quit, True, BLACK)
-    #     self.WIN.blit(rect_clicks_surf, [self.quit_rect.topleft[0] + 10, self.quit_rect.topleft[1] - 5])
-
-    # def menu_buttons(self):
-    #     self.actions_rect = pygame.Rect([10, 10], [100, 30])
-    #     self.algorithm_rect = pygame.Rect([40, 40], [100, 30])
-    #     rect_button_color = CYAN
-    #     actions = "Actions on graph"
-    #     algo = "Algorithms on graph"
-    #     font = pygame.font.SysFont('impact', 32)
-    #     pygame.draw.rect(self.WIN, rect_button_color, self.actions_rect)
-    #     rect_clicks_surf = font.render(actions, True, BLACK)
-    #     self.WIN.blit(rect_clicks_surf, [self.actions_rect.topleft[0] + 10, self.menu_rect.topleft[1] - 5])
-    #     pygame.draw.rect(self.WIN, rect_button_color, self.algorithm_rect)
-    #     rect_clicks_surf = font.render(algo, True, BLACK)
-    #     self.WIN.blit(rect_clicks_surf, [self.algorithm_rect.topleft[0] + 10, self.algorithm_rect.topleft[1] - 5])
-
     def draw_graph(self):
         self.draw_nodes()
         self.draw_edges()
@@ -112,7 +84,6 @@ class Graph_Game:
         p2 = rotate((10 + x, 0 + y), angle + 90)
         pygame.draw.polygon(self.screen, color, [p0, p1, p2])
 
-    # def draw_shortest_path(self):
 
     def play(self):
         run = True
@@ -126,9 +97,3 @@ class Graph_Game:
 
         pygame.quit()
 
-
-# if __name__ == "__main__":
-#     g = GraphAlgo()
-#     g.load_from_json(r"C:\Users\shira\Desktop\Ex3_OOP-main\Ex3_OOP-main\data\A3.json")
-#     game = Graph_Game(g)
-#     game.play()
