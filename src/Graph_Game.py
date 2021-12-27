@@ -1,12 +1,9 @@
+
 import math
 import sys
 import os
 
-# from src.DirectedWeightedGraph.graphAlgo import *
-# from src.DirectedWeightedGraph.graphAlgo import GraphAlgo
 import pygame
-
-from src.DirectedWeightedGraph.graphAlgoFile import *
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

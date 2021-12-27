@@ -1,8 +1,6 @@
-import random
-
-from src.DirectedWeightedGraph.edge import Edge
-from src.DirectedWeightedGraph.node import Node
-from src.api.GraphInterface import GraphInterface
+from edge import Edge
+from node import Node
+from GraphInterface import GraphInterface
 
 
 class DiGraph(GraphInterface):

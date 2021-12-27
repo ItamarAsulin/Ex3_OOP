@@ -1,13 +1,11 @@
 import json
-from abc import ABC
 from typing import List
 from queue import PriorityQueue
 from queue import Queue
-from src.api.GraphInterface import GraphInterface
-from src.DirectedWeightedGraph.diGraph import *
-from src.GraphForJson.graphForJson import *
-from src.api.GraphAlgoInterface import GraphAlgoInterface
-from src.GUI.Graph_Game import *
+from diGraph import *
+from graphForJson import *
+from GraphAlgoInterface import GraphAlgoInterface
+from Graph_Game import *
 
 
 def invert_graph(graph: DiGraph) -> DiGraph:

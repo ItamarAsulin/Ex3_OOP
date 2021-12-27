@@ -1,6 +1,5 @@
 from unittest import TestCase
-from src.DirectedWeightedGraph.diGraph import *
-from src.DirectedWeightedGraph.graphAlgoFile import *
+from src.graphAlgoFile import *
 
 
 def create_graph(size: int, graph: DiGraph):

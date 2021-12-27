@@ -1,5 +1,8 @@
-from src.DirectedWeightedGraph.diGraph import DiGraph
-from src.DirectedWeightedGraph.graphAlgoFile import GraphAlgo
+# import sys
+# # sys.path.insert(0, '../src')
+# import src
+from diGraph import DiGraph
+from graphAlgoFile import GraphAlgo
 
 def check():
     """

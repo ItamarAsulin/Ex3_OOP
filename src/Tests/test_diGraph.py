@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.DirectedWeightedGraph.diGraph import *
+from src.diGraph import *
 
 
 def generate_connected_graph() -> DiGraph:
