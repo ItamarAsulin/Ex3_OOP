@@ -34,33 +34,33 @@ class Graph_Game:
         self.X_par = 0
         self.Y_par = 0
 
-    def main_menu_buttons(self):
-        self.menu_rect = pygame.Rect([10, 10], [100, 30])
-        self.quit_rect = pygame.Rect([120, 10], [100, 30])
-        rect_button_color = CYAN
-        menu = "MENU"
-        quit = "QUIT"
-        font = pygame.font.SysFont('impact', 32)  # Here's the font we'll use to render text
-        pygame.draw.rect(self.WIN, rect_button_color, self.menu_rect)
-        rect_clicks_surf = font.render(menu, True, BLACK)
-        self.WIN.blit(rect_clicks_surf, [self.menu_rect.topleft[0] + 10, self.menu_rect.topleft[1] - 5])
-        pygame.draw.rect(self.WIN, rect_button_color, self.quit_rect)
-        rect_clicks_surf = font.render(quit, True, BLACK)
-        self.WIN.blit(rect_clicks_surf, [self.quit_rect.topleft[0] + 10, self.quit_rect.topleft[1] - 5])
+    # def main_menu_buttons(self):
+    #     self.menu_rect = pygame.Rect([10, 10], [100, 30])
+    #     self.quit_rect = pygame.Rect([120, 10], [100, 30])
+    #     rect_button_color = CYAN
+    #     menu = "MENU"
+    #     quit = "QUIT"
+    #     font = pygame.font.SysFont('impact', 32)  # Here's the font we'll use to render text
+    #     pygame.draw.rect(self.WIN, rect_button_color, self.menu_rect)
+    #     rect_clicks_surf = font.render(menu, True, BLACK)
+    #     self.WIN.blit(rect_clicks_surf, [self.menu_rect.topleft[0] + 10, self.menu_rect.topleft[1] - 5])
+    #     pygame.draw.rect(self.WIN, rect_button_color, self.quit_rect)
+    #     rect_clicks_surf = font.render(quit, True, BLACK)
+    #     self.WIN.blit(rect_clicks_surf, [self.quit_rect.topleft[0] + 10, self.quit_rect.topleft[1] - 5])
 
-    def menu_buttons(self):
-        self.actions_rect = pygame.Rect([10, 10], [100, 30])
-        self.algorithm_rect = pygame.Rect([40, 40], [100, 30])
-        rect_button_color = CYAN
-        actions = "Actions on graph"
-        algo = "Algorithms on graph"
-        font = pygame.font.SysFont('impact', 32)
-        pygame.draw.rect(self.WIN, rect_button_color, self.actions_rect)
-        rect_clicks_surf = font.render(actions, True, BLACK)
-        self.WIN.blit(rect_clicks_surf, [self.actions_rect.topleft[0] + 10, self.menu_rect.topleft[1] - 5])
-        pygame.draw.rect(self.WIN, rect_button_color, self.algorithm_rect)
-        rect_clicks_surf = font.render(algo, True, BLACK)
-        self.WIN.blit(rect_clicks_surf, [self.algorithm_rect.topleft[0] + 10, self.algorithm_rect.topleft[1] - 5])
+    # def menu_buttons(self):
+    #     self.actions_rect = pygame.Rect([10, 10], [100, 30])
+    #     self.algorithm_rect = pygame.Rect([40, 40], [100, 30])
+    #     rect_button_color = CYAN
+    #     actions = "Actions on graph"
+    #     algo = "Algorithms on graph"
+    #     font = pygame.font.SysFont('impact', 32)
+    #     pygame.draw.rect(self.WIN, rect_button_color, self.actions_rect)
+    #     rect_clicks_surf = font.render(actions, True, BLACK)
+    #     self.WIN.blit(rect_clicks_surf, [self.actions_rect.topleft[0] + 10, self.menu_rect.topleft[1] - 5])
+    #     pygame.draw.rect(self.WIN, rect_button_color, self.algorithm_rect)
+    #     rect_clicks_surf = font.render(algo, True, BLACK)
+    #     self.WIN.blit(rect_clicks_surf, [self.algorithm_rect.topleft[0] + 10, self.algorithm_rect.topleft[1] - 5])
 
     def draw_graph(self):
         self.draw_nodes()
@@ -120,17 +120,8 @@ class Graph_Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    mouse_pos = pygame.mouse.get_pos()
-                    if self.quit_rect.collidepoint(mouse_pos):
-                        run = False
-                        # pygame.quit()
-                    if self.menu_rect.collidepoint(mouse_pos):
-                        self.menu_buttons()
             self.WIN.fill((250, 250, 250))
             self.draw_graph()
-            self.main_menu_buttons()
-            # self.menu_buttons()
             pygame.display.update()
 
         pygame.quit()

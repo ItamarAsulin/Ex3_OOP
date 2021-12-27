@@ -152,7 +152,7 @@ class GraphAlgo(GraphAlgoInterface):
     """
     this method returns the min value for the next node to travel to in TSP.
     """
-    def find_min_for_tsp(self, unvisited: set, current_node_id: int):
+    def find_min_for_tsp(self, unvisited: set, current_node_id: int) -> int:
         self.calculate_shortest_path(current_node_id)
         min_dist_node = current_node_id
         min_dist = float('inf')
@@ -246,7 +246,7 @@ class GraphAlgo(GraphAlgoInterface):
     """
     this method preforms a BFS algorithm on the given graph.
     """
-    def BFS(self, graph, node: Node):
+    def BFS(self, graph: DiGraph, node: Node):
         queue: Queue = Queue()
         queue.put(node)
         node.tag = 1
